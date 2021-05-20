@@ -4,35 +4,42 @@ import {Switch, Route, Link, BrowserRouter as Router} from 'react-router-dom'
 import HomePage from './Home/Page'
 import {useState} from 'react'
 
-const NavItemStyle = styled.div``
-
-const NavBarContainer = styled.div`
-    display: ${props => props.overlay === true ? "block" : "none"};
+const NavItemStyle = styled.div`
     height: 100vh;
-    width: 100vw;
-    z-index: 1;
-    background: rgba(0, 0, 0, .5);
-    overflow: hidden;
-    position: fixed;
-    top: 0px;
-    left: 0px;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: ${props => props.color || "#000"};
+    a {
+        color: #FFF;
+        text-decoration: none;
+        font-size: 32px;
+        font-family: 'Lucida Grande';
+    }
 `
 
-const NavItem = ({path, title}) => 
-    <NavItemStyle>
+const NavItem = ({path, title, color}) => 
+    <NavItemStyle color={color}>
         <Link to={path}>{title}</Link>
     </NavItemStyle>
 
-// NavItem.propTypes = {
-//     path: PropTypes.string.isRequired,
-//     title: PropTypes.string.isRequired,
-// }
+
+const NavBarContainer = styled.div`
+    display: ${props => props.overlay === true ? "flex" : "none"};
+    height: 100vh;
+    width: 100vw;
+    z-index: 1;
+    overflow: hidden;
+    position: fixed;
+    flex-direction: row;
+`
 
 const NavBar = ({overlay}) => 
-    <NavBarContainer overlay={overlay}>
-        <NavItem path="/" title="Home"></NavItem>
-        <NavItem path="/services" title="Services"></NavItem>
-        <NavItem path="/faq" title="FAQ"></NavItem>
+    <NavBarContainer overlay={overlay} id='nav-container'>
+        <NavItem path="/" title="Home" color="#B7094C"></NavItem>
+        <NavItem path="/services" title="Services" color="#A01A58"></NavItem>
+        <NavItem path="/faq" title="FAQ" color="#892B64"></NavItem>
     </NavBarContainer>
 
 const NavOverlayContainer = styled.div`
@@ -45,24 +52,15 @@ const NavOverlayContainer = styled.div`
         padding: 28px 35px 0px 0px;
         cursor: pointer;
     }
-    /* background-color: rgba(0,0,0,0.5); Black background with opacity */
 `
-
-// const toggleOverlay = (overlay) => setOverlay(!overlay)
-
-// const NavOverlay = ({overlay}) => 
-//     <NavOverlayContainer>
-//         <span className="menu-icon" onClick={() => {
-//             setOverlay(!overlay)
-//             console.log(overlay)
-//         }}>&#9776;</span>
-//     </NavOverlayContainer>
 
 const ContentContainer = styled.div``
 
 const Content = () =>
     <Switch>
         <ContentContainer>
+            <Route path="/services" component={HomePage} />
+            <Route path="/faq" component={HomePage} />
             <Route exact path="/" component={HomePage} />
         </ContentContainer>
     </Switch>
@@ -75,7 +73,7 @@ const AppContainer = styled.div`
 
 function App() {
     const [overlay, setOverlay] = useState(false)
-    
+
     return (
         <AppContainer className="App">
             <Router>
