@@ -2,7 +2,7 @@ import './App.css';
 import styled from 'styled-components'
 import {Switch, Route, Link, BrowserRouter as Router} from 'react-router-dom'
 import HomePage from './Home/Page'
-import {useState} from 'react'
+import {useState, useCallback} from 'react'
 
 const NavItemStyle = styled.div`
     height: 100vh;
@@ -19,10 +19,18 @@ const NavItemStyle = styled.div`
     }
 `
 
-const NavItem = ({path, title, color}) => 
-    <NavItemStyle color={color}>
-        <Link to={path}>{title}</Link>
-    </NavItemStyle>
+const NavItem = ({path, title, color, overlay, setOverlay}) => {
+    const toggleOverlay = () => {
+        console.log('clicked')
+        setOverlay(!overlay)
+    }
+    return (
+        <NavItemStyle color={color}>
+            <Link to={path} onClick={toggleOverlay}>{title}</Link>
+        </NavItemStyle>
+    )
+}
+
 
 
 const NavBarContainer = styled.div`
@@ -35,21 +43,21 @@ const NavBarContainer = styled.div`
     flex-direction: row;
 `
 
-const NavBar = ({overlay}) => 
+const NavBar = ({overlay, setOverlay}) => 
     <NavBarContainer overlay={overlay} id='nav-container'>
-        <NavItem path="/" title="Home" color="#B7094C"></NavItem>
-        <NavItem path="/services" title="Services" color="#A01A58"></NavItem>
-        <NavItem path="/faq" title="FAQ" color="#892B64"></NavItem>
+        <NavItem path="/" title="Home" color="#B7094C" overlay={overlay} setOverlay={setOverlay}></NavItem>
+        <NavItem path="/services" title="Services" color="#A01A58" overlay={overlay} setOverlay={setOverlay}></NavItem>
+        <NavItem path="/faq" title="FAQ" color="#892B64" overlay={overlay} setOverlay={setOverlay}></NavItem>
     </NavBarContainer>
 
 const NavOverlayContainer = styled.div`
     z-index: 2;
     position: absolute;
     align-self: flex-end;
-
+    padding-top: 10px;
     .menu-icon {
-        font-size: 30px;
-        padding: 28px 35px 0px 0px;
+        font-size: 35px;
+        padding-right: 30px;
         cursor: pointer;
     }
 `
@@ -59,9 +67,9 @@ const ContentContainer = styled.div``
 const Content = () =>
     <Switch>
         <ContentContainer>
+            <Route exact path="/" component={HomePage} />
             <Route path="/services" component={HomePage} />
             <Route path="/faq" component={HomePage} />
-            <Route exact path="/" component={HomePage} />
         </ContentContainer>
     </Switch>
 
@@ -78,31 +86,16 @@ function App() {
         <AppContainer className="App">
             <Router>
                 <NavOverlayContainer>
-                    <span className="menu-icon" onClick={() => {setOverlay(!overlay)}}>&#9776;</span>
+                    {!overlay ? 
+                        <span className="menu-icon" onClick={() => {setOverlay(!overlay)}}>&#9776;</span> : 
+                        <span className="menu-icon" onClick={() => {setOverlay(!overlay)}}>&#x2715;</span>
+                    }  
                 </NavOverlayContainer>
-                <NavBar overlay={overlay}/>
+                <NavBar overlay={overlay} setOverlay={setOverlay}/>
                 <Content />
             </Router>
         </AppContainer>
     );
 }
-
-// function App() {
-//     return (
-//         <AppContainer className="App">
-//             <Router>
-//                 <div className="menu-btn">
-//                     <span className="menu-icon">&#9776;</span>
-//                 </div>
-//                 <div className="links">
-//                     <Link path="/">First link</Link>
-//                     <Link path="/">First link</Link>
-//                 </div>
-//                 {/* <NavBar /> */}
-//                 <Content />
-//             </Router>
-//         </AppContainer>
-//     );
-// }
 
 export default App;
