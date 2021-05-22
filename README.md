@@ -11,7 +11,7 @@
 
 ## TODO
 - [x] create react app
-- [ ] create overlay fold out menu (top right, take up whole page when clicked)
+- [x] create overlay fold out menu (top right, take up whole page when clicked)
 - [ ] create home page
 - [ ] services page cards
 - [ ] faq dropdown cards

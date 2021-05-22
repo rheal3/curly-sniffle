@@ -1,8 +1,10 @@
 import './App.css';
 import styled from 'styled-components'
 import {Switch, Route, Link, BrowserRouter as Router} from 'react-router-dom'
+import {useState} from 'react'
 import HomePage from './Home/Page'
-import {useState, useCallback} from 'react'
+import Services from './Services/Page'
+import FAQ from './FAQ/Page'
 
 const NavItemStyle = styled.div`
     height: 100vh;
@@ -31,8 +33,6 @@ const NavItem = ({path, title, color, overlay, setOverlay}) => {
     )
 }
 
-
-
 const NavBarContainer = styled.div`
     display: ${props => props.overlay === true ? "flex" : "none"};
     height: 100vh;
@@ -52,7 +52,7 @@ const NavBar = ({overlay, setOverlay}) =>
 
 const NavOverlayContainer = styled.div`
     z-index: 2;
-    position: absolute;
+    position: fixed;
     align-self: flex-end;
     padding-top: 10px;
     .menu-icon {
@@ -68,8 +68,8 @@ const Content = () =>
     <Switch>
         <ContentContainer>
             <Route exact path="/" component={HomePage} />
-            <Route path="/services" component={HomePage} />
-            <Route path="/faq" component={HomePage} />
+            <Route path="/services" component={Services} />
+            <Route path="/faq" component={FAQ} />
         </ContentContainer>
     </Switch>
 
