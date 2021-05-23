@@ -4,6 +4,7 @@ import {Switch, Route, Link, BrowserRouter as Router} from 'react-router-dom'
 import {useState} from 'react'
 import HomePage from './Home/Page'
 import Services from './Services/Page'
+import BookAppointment from './BookAppointment/Page'
 import FAQ from './FAQ/Page'
 
 const NavItemStyle = styled.div`
@@ -85,6 +86,7 @@ function App() {
     return (
         <AppContainer className="App">
             <Router>
+                <BookAppointment />
                 <NavOverlayContainer>
                     {!overlay ? 
                         <span className="menu-icon" onClick={() => {setOverlay(!overlay)}}>&#9776;</span> : 
