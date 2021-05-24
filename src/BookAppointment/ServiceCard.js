@@ -41,16 +41,26 @@ const ServiceCardStyling = styled.div`
     }
 `
 
-const ServiceCard = ({price, title, length}) => 
-    <ServiceCardStyling>
-        <div className="info">
-            <h2>{title}</h2>
-            <p>${price} - {length}</p>
-        </div>
-        <div className="book">
-            <button>select</button>
-        </div>
-    </ServiceCardStyling>
+const ServiceCard = ({setAppointmentType, appointmentDetails}) => {
+    const {title, price, length} = appointmentDetails
+
+    const selectBtn = () => {
+        setAppointmentType(appointmentDetails)
+        // transition to next page
+    }
+
+    return (
+        <ServiceCardStyling>
+            <div className="info">
+                <h2>{title}</h2>
+                <p>{price} - {length}</p>
+            </div>
+            <div className="book">
+                <button onClick={selectBtn}>select</button>
+            </div>
+        </ServiceCardStyling>
+    )
+}
 
 export default ServiceCard
 
