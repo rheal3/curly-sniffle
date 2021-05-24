@@ -40,7 +40,7 @@ const AppointmentStepsContainer = styled.div`
     }
 `
 
-const AppointmentContentContainer = styled.div`
+const ContentContainer = styled.div`
     flex-grow: 4;
     display: flex;
     flex-direction: column;
@@ -86,17 +86,47 @@ const BookAppointment = () => {
     const [customerDetails, setCustomerDetails] = useState()
     const [currentPage, setCurrentPage] = useState("service")
 
-    const aptDetails = {
-        id: 43,
-        title: 'super cut',
-        price: '$30.00',
-        length: '1 hour'
-    }
+    const aptDetails = [
+        {
+            id: 43,
+            title: 'super cut',
+            price: '$30.00',
+            length: '1 hour'
+        },
+        {
+            id: 42,
+            title: "Women's Cut- Master Stylist",
+            price: '$30.00',
+            length: '1 hour'
+        },
+        {
+            id: 57,
+            title: "Men's Scissor Cut- Stylist",
+            price: '$30.00',
+            length: '1 hour'
+        },
+        {
+            id: 39,
+            title: 'Full Highlight (Foils)- Master Stylist',
+            price: '$30.00',
+            length: '1 hour'
+        }
+    ]
 
-    useEffect(() => {
-        // when appointmentType changes change what is displayed in side bar
-        console.log(appointmentType)
-    }, [appointmentType])
+    const contentSwitch = (currentPage) => {
+        switch (currentPage) {
+            case "service":
+                return aptDetails.map((details, i) => <ServiceCard setAppointmentType={setAppointmentType} appointmentDetails={details}/>)
+            case "staff":
+                break;
+            case "dateTime":
+                break;
+            case "customerDetails":
+                break;
+            default:
+                break;
+        }
+    }
 
     return (
         <BookAppointmentBackground>
@@ -131,9 +161,9 @@ const BookAppointment = () => {
                         : <li><h5 style={{color: '#adb1b5'}}>Enter your details</h5></li>}
                         </ul>
                     </AppointmentStepsContainer>
-                    <AppointmentContentContainer>
-                        <ServiceCard setAppointmentType={setAppointmentType} appointmentDetails={aptDetails}/>
-                    </AppointmentContentContainer>
+                    <ContentContainer>
+                        {contentSwitch(currentPage)}
+                    </ContentContainer>
                 </div>
                 <div>
                     {/* footer - next page and back buttons */}
