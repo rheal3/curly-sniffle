@@ -1,6 +1,8 @@
 import styled from 'styled-components'
 import ServiceCard from './ServiceCard'
+import StaffCard from './StaffCard'
 import {useState, useEffect} from 'react'
+import {aptDetails, staffDetails} from './api'
 
 const BookAppointmentBackground = styled.div`
     position: fixed;
@@ -19,12 +21,29 @@ const BookAppointmentContainer = styled.div`
     border-radius: 5px;
     box-shadow: 2px 3px 10px 2px rgba(0,0,0,0.47);
     background: #FFF;
+    button {
+        /* TODO if okay to move to next page change opacity of continue */
+        background: #FFF;
+        border: 1px solid #000;
+        border-radius: 2px;
+        padding: 5px 40px;
+        font-weight: bold; 
+    }
+    button.continueBtn {
+        background: #000;
+        color: #FFF;
+    }
+    .navigation {
+        display: flex;
+        justify-content: space-between;
+        margin: 0px 50px;
+    }
 `
 
 const AppointmentStepsContainer = styled.div`
-    flex-grow: 1;
     display: flex;
     flex-direction: column;
+    width: 235px;
     ul {
         list-style-type: none;
         text-align: left;
@@ -47,12 +66,6 @@ const ContentContainer = styled.div`
     align-items: center;
 `
 
-// const StaffCard = () => 
-//     <div>
-//         {/* <span>image of letter in circle</span> */}
-//         <h5>Name</h5>
-//     </div>
-
 const ServiceSelectedStyle = styled.div`
     background: #F5F6F7;
     padding: 16px 24px;
@@ -60,11 +73,15 @@ const ServiceSelectedStyle = styled.div`
     p {
         color: rgba(0, 0, 0, 0.6);
         margin: 0;
-        font-size: 0.875rem;
+        font-size: 15px;
         line-height: 1.5;
+        width: 147px;
         span {
             color: #000;
         }
+    }
+    .underline {
+        text-decoration: underline;
     }
 `
 const ServiceSelected = ({appointmentType}) =>
@@ -79,54 +96,47 @@ const ServiceSelected = ({appointmentType}) =>
         </ServiceSelectedStyle>     
     </li>
 
+const StaffSelected = ({staff}) => 
+    <li>
+        <h5>Select service</h5>
+        <ServiceSelectedStyle>
+            <p>
+                <span>{staff.name}</span>
+            </p>
+        </ServiceSelectedStyle>     
+    </li> 
+
+
 const BookAppointment = () => {
     const [appointmentType, setAppointmentType] = useState()
     const [staff, setStaff] = useState()
     const [dateTime, setDateTime] = useState()
     const [customerDetails, setCustomerDetails] = useState()
-    const [currentPage, setCurrentPage] = useState("service")
+    // const [appointment, setAppointment] = useState({'service': {}}) // TODO (continue btn) if appointment[currentPage] then can move to next page
+    const [currentPage, setCurrentPage] = useState("service") //should this just be a const ? not useState?
+    let nextPage = currentPage === "service" ? "staff" : currentPage === "staff" ? "dateTime" : currentPage === "dateTime" ? "customerDetails" : currentPage === "customerDetails"
 
-    const aptDetails = [
-        {
-            id: 43,
-            title: 'super cut',
-            price: '$30.00',
-            length: '1 hour'
-        },
-        {
-            id: 42,
-            title: "Women's Cut- Master Stylist",
-            price: '$30.00',
-            length: '1 hour'
-        },
-        {
-            id: 57,
-            title: "Men's Scissor Cut- Stylist",
-            price: '$30.00',
-            length: '1 hour'
-        },
-        {
-            id: 39,
-            title: 'Full Highlight (Foils)- Master Stylist',
-            price: '$30.00',
-            length: '1 hour'
-        }
-    ]
-
-    const contentSwitch = (currentPage) => {
+    const contentSwitch = (currentPage, nextPage) => {
         switch (currentPage) {
             case "service":
+                nextPage = "staff"
                 return aptDetails.map((details, i) => <ServiceCard setAppointmentType={setAppointmentType} appointmentDetails={details}/>)
             case "staff":
-                break;
+                nextPage = "dateTime"
+                return staffDetails.map((details, i) => <StaffCard setStaff={setStaff} staffDetails={details}/>)
             case "dateTime":
-                break;
+                nextPage = "customerDetails"
+                return <p>dateTime page</p>
+                // break;
             case "customerDetails":
-                break;
+                return <p>customerDetails page</p>
+                // setNextPage("") // <<< what's next?
+                // break;
             default:
                 break;
         }
     }
+
 
     return (
         <BookAppointmentBackground>
@@ -142,12 +152,10 @@ const BookAppointment = () => {
                         <ul>
                         {appointmentType ?
                             <ServiceSelected appointmentType={appointmentType}/>
-                        : (currentPage === "service") ? <li><h5 style={{textDecoration: 'underline'}}>Select service</h5></li>
+                        : (currentPage === "service") ? <li><h5 class="underline">Select service</h5></li>
                         : <li><h5>Select service</h5></li>}
                         {staff ?
-                            <li>
-                                <h5>Select staff</h5>
-                            </li>
+                            <StaffSelected staff={staff} />
                         : <li><h5 style={{color: '#adb1b5'}}>Select staff</h5></li>}
                         {dateTime ?
                             <li>
@@ -162,13 +170,14 @@ const BookAppointment = () => {
                         </ul>
                     </AppointmentStepsContainer>
                     <ContentContainer>
-                        {contentSwitch(currentPage)}
+                        {contentSwitch(currentPage, nextPage)}
                     </ContentContainer>
                 </div>
                 <div>
                     {/* footer - next page and back buttons */}
-                    <div>
-                        <button>Continue</button>
+                    <div className="navigation">
+                        <button>Back</button>
+                        <button className="continueBtn" onClick={() => {setCurrentPage(nextPage)}}>Continue</button>
                     </div>
                 </div>
             </BookAppointmentContainer>
