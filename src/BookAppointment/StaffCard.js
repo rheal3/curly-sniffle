@@ -40,6 +40,7 @@ const StaffCardStyling = styled.div`
             border-radius: 2px;
             padding: 5px 8px;
             font-weight: bold; 
+            cursor: pointer;
         }
     }
 `

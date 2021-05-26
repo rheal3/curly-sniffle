@@ -21,6 +21,9 @@ const BookAppointmentContainer = styled.div`
     border-radius: 5px;
     box-shadow: 2px 3px 10px 2px rgba(0,0,0,0.47);
     background: #FFF;
+    .flex-row {
+        display: flex;
+    }
 `
 
 const NavigationContainerStyle = styled.div`
@@ -37,6 +40,7 @@ const NavigationContainerStyle = styled.div`
         font-weight: bold; 
         font-size: 16px;
         margin: 20px 0;
+        cursor: pointer;
     }
     button.continueBtn {
         background: #000;
@@ -60,6 +64,15 @@ const AppointmentStepsContainer = styled.div`
                 line-height: 1.625;
             }
         }
+    }
+    .edit {
+        font-size: 1rem;
+        cursor: pointer;
+        color: rgba(0,0,0,0.6);
+    }
+    .edit:hover {
+        text-decoration: underline;
+        color: #000;
     }
 `
 
@@ -90,9 +103,9 @@ const ServiceSelectedStyle = styled.div`
         text-decoration: underline;
     }
 `
-const ServiceSelected = ({appointmentType}) =>
+const ServiceSelected = ({appointmentType, setCurrentPage}) =>
     <li>
-        <h5>Select service</h5>
+        <h5>Select service - <span class='edit' onClick={() => {setCurrentPage("service")}}>Edit</span></h5>
         <ServiceSelectedStyle>
             <p>
                 <span>{appointmentType.title}</span>
@@ -102,15 +115,16 @@ const ServiceSelected = ({appointmentType}) =>
         </ServiceSelectedStyle>     
     </li>
 
-const StaffSelected = ({staff}) => 
+const StaffSelected = ({staff, setCurrentPage}) => 
     <li>
-        <h5>Select service</h5>
+        <h5>Select service - <span class='edit' onClick={() => {setCurrentPage("staff")}}>Edit</span></h5>
         <ServiceSelectedStyle>
             <p>
                 <span>{staff.name}</span>
             </p>
         </ServiceSelectedStyle>     
     </li> 
+
 
 
 const BookAppointment = () => {
@@ -120,8 +134,9 @@ const BookAppointment = () => {
     const [customerDetails, setCustomerDetails] = useState()
     // const [appointment, setAppointment] = useState({'service': {}}) // TODO (continue btn) if appointment[currentPage] then can move to next page
     const [currentPage, setCurrentPage] = useState("service") //should this just be a const ? not useState?
-    let nextPage = currentPage === "service" ? "staff" : currentPage === "staff" ? "dateTime" : currentPage === "dateTime" ? "customerDetails" : currentPage === "customerDetails"
-
+    const nextPage = currentPage === "service" ? "staff" : currentPage === "staff" ? "dateTime" : currentPage === "dateTime" ? "customerDetails" : currentPage 
+    const backPage = currentPage === "customerDetails" ? "dateTime" : currentPage === "dateTime" ? "staff" : currentPage === "staff" ? "service" : currentPage 
+    
     const contentSwitch = (currentPage, nextPage) => {
         switch (currentPage) {
             case "service":
@@ -153,15 +168,15 @@ const BookAppointment = () => {
                 <div style={{height: '80px'}}>
                     header - title top left
                 </div>
-                <div className='row' style={{display: 'flex'}}>
+                <div className='row flex-row'>
                     <AppointmentStepsContainer>
                         <ul>
                         {appointmentType ?
-                            <ServiceSelected appointmentType={appointmentType}/>
+                            <ServiceSelected appointmentType={appointmentType} setCurrentPage={setCurrentPage} />
                         : (currentPage === "service") ? <li><h5 class="underline">Select service</h5></li>
                         : <li><h5>Select service</h5></li>}
                         {staff ?
-                            <StaffSelected staff={staff} />
+                            <StaffSelected staff={staff} setCurrentPage={setCurrentPage} />
                         : <li><h5 style={{color: '#adb1b5'}}>Select staff</h5></li>}
                         {dateTime ?
                             <li>
@@ -180,11 +195,8 @@ const BookAppointment = () => {
                     </ContentContainer>
                 </div>
                 <NavigationContainerStyle>
-                    {/* footer - next page and back buttons */}
-
-                        <button>Back</button>
+                        <button onClick={() => {setCurrentPage(backPage)}}>Back</button>
                         <button className="continueBtn" onClick={() => {setCurrentPage(nextPage)}}>Continue</button>
-
                 </NavigationContainerStyle>
             </BookAppointmentContainer>
         </BookAppointmentBackground>
