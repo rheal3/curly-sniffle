@@ -17,10 +17,17 @@ const BookAppointmentBackground = styled.div`
 
 const BookAppointmentContainer = styled.div`
     width: 900px;
-    height: 90vh;
+    height: 650px;
     border-radius: 5px;
     box-shadow: 2px 3px 10px 2px rgba(0,0,0,0.47);
     background: #FFF;
+`
+
+const NavigationContainerStyle = styled.div`
+    height: 72px;
+    display: flex;
+    justify-content: space-between;
+    margin: 0px 50px;
     button {
         /* TODO if okay to move to next page change opacity of continue */
         background: #FFF;
@@ -28,15 +35,12 @@ const BookAppointmentContainer = styled.div`
         border-radius: 2px;
         padding: 5px 40px;
         font-weight: bold; 
+        font-size: 16px;
+        margin: 20px 0;
     }
     button.continueBtn {
         background: #000;
         color: #FFF;
-    }
-    .navigation {
-        display: flex;
-        justify-content: space-between;
-        margin: 0px 50px;
     }
 `
 
@@ -64,6 +68,8 @@ const ContentContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow-y: scroll;
+    height: 480px;
 `
 
 const ServiceSelectedStyle = styled.div`
@@ -173,13 +179,13 @@ const BookAppointment = () => {
                         {contentSwitch(currentPage, nextPage)}
                     </ContentContainer>
                 </div>
-                <div>
+                <NavigationContainerStyle>
                     {/* footer - next page and back buttons */}
-                    <div className="navigation">
+
                         <button>Back</button>
                         <button className="continueBtn" onClick={() => {setCurrentPage(nextPage)}}>Continue</button>
-                    </div>
-                </div>
+
+                </NavigationContainerStyle>
             </BookAppointmentContainer>
         </BookAppointmentBackground>
     )

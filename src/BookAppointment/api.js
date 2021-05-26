@@ -24,6 +24,18 @@ export const aptDetails = [
         title: 'Full Highlight (Foils)- Master Stylist',
         price: '$30.00',
         length: '1 hour'
+    },
+    {
+        id: 72,
+        title: 'Full Highlight (Foils)- Master Stylist',
+        price: '$30.00',
+        length: '1 hour'
+    },
+    {
+        id: 45,
+        title: 'Full Highlight (Foils)- Master Stylist',
+        price: '$30.00',
+        length: '1 hour'
     }
 ]
 
