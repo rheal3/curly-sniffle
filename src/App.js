@@ -56,11 +56,26 @@ const NavOverlayContainer = styled.div`
     position: fixed;
     align-self: flex-end;
     padding-top: 10px;
+    display: flex;
     .menu-icon {
         font-size: 35px;
         padding-right: 30px;
         cursor: pointer;
     }
+    button {
+        border: 1px solid #000;
+        border-radius: 2px;
+        padding: 5px 10px;
+        font-weight: bold; 
+        font-size: 16px;
+        /* margin: ${props => props.overlay === true ? "7px 15px 4px 0" : "10px 15px 4px 0"}; */
+        margin: 10px 15px 4px 0;
+        cursor: pointer;
+        background: #000;
+        color: #FFF;
+        display: ${props => props.overlay === false ? "flex" : "none"};
+    }
+
 `
 
 const ContentContainer = styled.div``
@@ -82,18 +97,20 @@ const AppContainer = styled.div`
 
 function App() {
     const [overlay, setOverlay] = useState(false)
+    const [aptOverlay, setAptOverlay] = useState(false)
 
     return (
         <AppContainer className="App">
             <Router>
-                <BookAppointment />
-                <NavOverlayContainer>
+                <NavOverlayContainer overlay={overlay}>
+                    <button onClick={() => {setAptOverlay(true)}}>book appointment</button>
                     {!overlay ? 
                         <span className="menu-icon" onClick={() => {setOverlay(!overlay)}}>&#9776;</span> : 
                         <span className="menu-icon" onClick={() => {setOverlay(!overlay)}}>&#x2715;</span>
                     }  
                 </NavOverlayContainer>
                 <NavBar overlay={overlay} setOverlay={setOverlay}/>
+                <BookAppointment aptOverlay={aptOverlay} setAptOverlay={setAptOverlay}/>
                 <Content />
             </Router>
         </AppContainer>

@@ -10,7 +10,7 @@ const BookAppointmentBackground = styled.div`
     height: 100vh;
     z-index: 3;
     background: rgb(0, 0, 0, 0.6);
-    display: flex;
+    display: ${props => props.aptOverlay === true ? "flex" : "none"};
     justify-content: center;
     align-items: center;
 `
@@ -45,6 +45,24 @@ const NavigationContainerStyle = styled.div`
     button.continueBtn {
         background: #000;
         color: #FFF;
+    }
+`
+
+const HeaderContainer = styled.div`
+    height: 80px;
+    position: relative;
+    i {
+        font-size: 30px;
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        margin: 10px 15px;
+        cursor: pointer;
+    }
+    .header {
+        text-align: left;
+        padding: 30px;
+        font-size: 25px;
     }
 `
 
@@ -127,12 +145,12 @@ const StaffSelected = ({staff, setCurrentPage}) =>
 
 
 
-const BookAppointment = () => {
+const BookAppointment = ({aptOverlay, setAptOverlay}) => {
     const [appointmentType, setAppointmentType] = useState()
     const [staff, setStaff] = useState()
     const [dateTime, setDateTime] = useState()
     const [customerDetails, setCustomerDetails] = useState()
-    // const [appointment, setAppointment] = useState({'service': {}}) // TODO (continue btn) if appointment[currentPage] then can move to next page
+    // const [appointment, setAppointment] = useState({service: {}}) // TODO (continue btn) if appointment[currentPage] then can move to next page
     const [currentPage, setCurrentPage] = useState("service") //should this just be a const ? not useState?
     const nextPage = currentPage === "service" ? "staff" : currentPage === "staff" ? "dateTime" : currentPage === "dateTime" ? "customerDetails" : currentPage 
     const backPage = currentPage === "customerDetails" ? "dateTime" : currentPage === "dateTime" ? "staff" : currentPage === "staff" ? "service" : currentPage 
@@ -160,14 +178,14 @@ const BookAppointment = () => {
 
 
     return (
-        <BookAppointmentBackground>
+        <BookAppointmentBackground aptOverlay={aptOverlay}>
             <BookAppointmentContainer>
-                <div>
-                    close - fixed top right
-                </div>
-                <div style={{height: '80px'}}>
-                    header - title top left
-                </div>
+                <HeaderContainer>
+                    <i className="fas fa-times" onClick={() => {setAptOverlay(false)}}></i>
+                    <div className="header">
+                        header - title top left
+                    </div>
+                </HeaderContainer>
                 <div className='row flex-row'>
                     <AppointmentStepsContainer>
                         <ul>
