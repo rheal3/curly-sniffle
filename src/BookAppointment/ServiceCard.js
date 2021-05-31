@@ -42,12 +42,12 @@ const ServiceCardStyling = styled.div`
     }
 `
 
-const ServiceCard = ({setAppointmentType, appointmentDetails}) => {
+const ServiceCard = ({appointment, setAppointment, appointmentDetails}) => {
     const {title, price, length} = appointmentDetails
 
     const selectBtn = () => {
-        setAppointmentType(appointmentDetails)
-        // transition to next page
+        setAppointment({...appointment, service: appointmentDetails})
+        console.log(appointment)
     }
 
     return (

@@ -45,11 +45,12 @@ const StaffCardStyling = styled.div`
     }
 `
 
-const StaffCard = ({setStaff, staffDetails}) => {
+const StaffCard = ({appointment, setAppointment, staffDetails}) => {
     const {name} = staffDetails
 
     const selectBtn = () => {
-        setStaff(staffDetails)
+        setAppointment({...appointment, staff: staffDetails})
+        console.log(appointment)
     }
 
     return (

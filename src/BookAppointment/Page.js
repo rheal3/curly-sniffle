@@ -121,14 +121,14 @@ const ServiceSelectedStyle = styled.div`
         text-decoration: underline;
     }
 `
-const ServiceSelected = ({appointmentType, setCurrentPage}) =>
+const ServiceSelected = ({appointment, setCurrentPage}) =>
     <li>
         <h5>Select service - <span class='edit' onClick={() => {setCurrentPage("service")}}>Edit</span></h5>
         <ServiceSelectedStyle>
             <p>
-                <span>{appointmentType.title}</span>
+                <span>{appointment.title}</span>
                 <br />
-                {appointmentType.length}
+                {appointment.length}
             </p>
         </ServiceSelectedStyle>     
     </li>
@@ -146,36 +146,31 @@ const StaffSelected = ({staff, setCurrentPage}) =>
 
 
 const BookAppointment = ({aptOverlay, setAptOverlay}) => {
-    const [appointmentType, setAppointmentType] = useState()
-    const [staff, setStaff] = useState()
-    const [dateTime, setDateTime] = useState()
-    const [customerDetails, setCustomerDetails] = useState()
-    // const [appointment, setAppointment] = useState({service: {}}) // TODO (continue btn) if appointment[currentPage] then can move to next page
-    const [currentPage, setCurrentPage] = useState("service") //should this just be a const ? not useState?
-    const nextPage = currentPage === "service" ? "staff" : currentPage === "staff" ? "dateTime" : currentPage === "dateTime" ? "customerDetails" : currentPage 
-    const backPage = currentPage === "customerDetails" ? "dateTime" : currentPage === "dateTime" ? "staff" : currentPage === "staff" ? "service" : currentPage 
+    const [appointment, setAppointment] = useState({})
+    const [currentPage, setCurrentPage] = useState("service")
+    const nextPage = currentPage === "service" && appointment[currentPage] ? "staff" 
+        : currentPage === "staff" && appointment[currentPage] ? "dateTime" 
+        : currentPage === "dateTime" && appointment[currentPage] ? "customerDetails" 
+        : currentPage 
+    const backPage = currentPage === "customerDetails" ? "dateTime" 
+        : currentPage === "dateTime" ? "staff" 
+        : currentPage === "staff" ? "service" 
+        : currentPage 
     
-    const contentSwitch = (currentPage, nextPage) => {
+    const contentSwitch = (currentPage) => {
         switch (currentPage) {
             case "service":
-                nextPage = "staff"
-                return aptDetails.map((details, i) => <ServiceCard setAppointmentType={setAppointmentType} appointmentDetails={details}/>)
+                return aptDetails.map((details, i) => <ServiceCard appointment={appointment} setAppointment={setAppointment} appointmentDetails={details}/>)
             case "staff":
-                nextPage = "dateTime"
-                return staffDetails.map((details, i) => <StaffCard setStaff={setStaff} staffDetails={details}/>)
+                return staffDetails.map((details, i) => <StaffCard appointment={appointment} setAppointment={setAppointment} staffDetails={details}/>)
             case "dateTime":
-                nextPage = "customerDetails"
                 return <p>dateTime page</p>
-                // break;
             case "customerDetails":
                 return <p>customerDetails page</p>
-                // setNextPage("") // <<< what's next?
-                // break;
             default:
                 break;
         }
     }
-
 
     return (
         <BookAppointmentBackground aptOverlay={aptOverlay}>
@@ -189,19 +184,19 @@ const BookAppointment = ({aptOverlay, setAptOverlay}) => {
                 <div className='row flex-row'>
                     <AppointmentStepsContainer>
                         <ul>
-                        {appointmentType ?
-                            <ServiceSelected appointmentType={appointmentType} setCurrentPage={setCurrentPage} />
+                        {appointment.service ?
+                            <ServiceSelected appointment={appointment.service} setCurrentPage={setCurrentPage} />
                         : (currentPage === "service") ? <li><h5 class="underline">Select service</h5></li>
                         : <li><h5>Select service</h5></li>}
-                        {staff ?
-                            <StaffSelected staff={staff} setCurrentPage={setCurrentPage} />
+                        {appointment.staff ?
+                            <StaffSelected staff={appointment.staff} setCurrentPage={setCurrentPage} />
                         : <li><h5 style={{color: '#adb1b5'}}>Select staff</h5></li>}
-                        {dateTime ?
+                        {appointment.dateTime ?
                             <li>
                                 <h5>Select date and time</h5>
                             </li>
                         : <li><h5 style={{color: '#adb1b5'}}>Select date and time</h5></li>}
-                        {customerDetails ?
+                        {appointment.customerDetails ?
                             <li>
                                 <h5>Enter your details</h5>
                             </li>
