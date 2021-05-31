@@ -128,7 +128,7 @@ const ServiceSelected = ({appointment, setCurrentPage}) =>
             <p>
                 <span>{appointment.title}</span>
                 <br />
-                {appointment.length}
+                {appointment.duration}
             </p>
         </ServiceSelectedStyle>     
     </li>
