@@ -68,12 +68,15 @@ const NavOverlayContainer = styled.div`
         padding: 5px 10px;
         font-weight: bold; 
         font-size: 16px;
-        /* margin: ${props => props.overlay === true ? "7px 15px 4px 0" : "10px 15px 4px 0"}; */
         margin: 10px 15px 4px 0;
         cursor: pointer;
+        background: #FFF;
+        color: #000;
+        display: ${props => props.overlay === false ? "flex" : "none"};
+    }
+    button:hover {
         background: #000;
         color: #FFF;
-        display: ${props => props.overlay === false ? "flex" : "none"};
     }
 
 `

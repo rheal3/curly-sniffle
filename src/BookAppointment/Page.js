@@ -32,9 +32,8 @@ const NavigationContainerStyle = styled.div`
     justify-content: space-between;
     margin: 0px 50px;
     button {
-        /* TODO if okay to move to next page change opacity of continue */
         background: #FFF;
-        border: 1px solid #000;
+        border: ${props => props.grey ? "1px solid #000" : "1px solid #B3B3B3"};
         border-radius: 2px;
         padding: 5px 40px;
         font-weight: bold; 
@@ -43,7 +42,7 @@ const NavigationContainerStyle = styled.div`
         cursor: pointer;
     }
     button.continueBtn {
-        background: #000;
+        background: ${props => props.grey ? "#000" : "#B3B3B3"};
         color: #FFF;
     }
 `
@@ -207,7 +206,7 @@ const BookAppointment = ({aptOverlay, setAptOverlay}) => {
                         {contentSwitch(currentPage, nextPage)}
                     </ContentContainer>
                 </div>
-                <NavigationContainerStyle>
+                <NavigationContainerStyle grey={appointment[currentPage] ? true : false} >
                         <button onClick={() => {setCurrentPage(backPage)}}>Back</button>
                         <button className="continueBtn" onClick={() => {setCurrentPage(nextPage)}}>Continue</button>
                 </NavigationContainerStyle>
