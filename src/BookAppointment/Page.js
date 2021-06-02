@@ -2,7 +2,8 @@ import styled from 'styled-components'
 import ServiceCard from './ServiceCard'
 import StaffCard from './StaffCard'
 import {useState, useEffect} from 'react'
-import {aptDetails, staffDetails} from './api'
+// import {aptDetails, staffDetails} from './api'
+import {getServices, getStaff} from './api'
 
 const BookAppointmentBackground = styled.div`
     position: fixed;
@@ -137,11 +138,10 @@ const StaffSelected = ({staff, setCurrentPage}) =>
         <h5>Select service - <span class='edit' onClick={() => {setCurrentPage("staff")}}>Edit</span></h5>
         <ServiceSelectedStyle>
             <p>
-                <span>{staff.name}</span>
+                <span>{staff.first_name} {staff.last_name}</span>
             </p>
         </ServiceSelectedStyle>     
     </li> 
-
 
 
 const BookAppointment = ({aptOverlay, setAptOverlay}) => {
@@ -156,12 +156,25 @@ const BookAppointment = ({aptOverlay, setAptOverlay}) => {
         : currentPage === "staff" ? "service" 
         : currentPage 
     
+    const [services, setServices] = useState([])
+    const [staff, setStaff] = useState([])
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const allServices = await getServices()
+            setServices(allServices)
+            const allStaff = await getStaff()
+            setStaff(allStaff)
+        }
+        fetchData()
+    }, [])
+
     const contentSwitch = (currentPage) => {
         switch (currentPage) {
             case "service":
-                return aptDetails.map((details, i) => <ServiceCard appointment={appointment} setAppointment={setAppointment} appointmentDetails={details}/>)
+                return services.map((details, i) => <ServiceCard appointment={appointment} setAppointment={setAppointment} appointmentDetails={details}/>)
             case "staff":
-                return staffDetails.map((details, i) => <StaffCard appointment={appointment} setAppointment={setAppointment} staffDetails={details}/>)
+                return staff.map((details, i) => <StaffCard appointment={appointment} setAppointment={setAppointment} staffDetails={details}/>)
             case "dateTime":
                 return <p>dateTime page</p>
             case "customerDetails":

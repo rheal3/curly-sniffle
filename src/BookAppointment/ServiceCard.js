@@ -43,18 +43,17 @@ const ServiceCardStyling = styled.div`
 `
 
 const ServiceCard = ({appointment, setAppointment, appointmentDetails}) => {
-    const {title, price, length} = appointmentDetails
+    const {title, price, duration} = appointmentDetails
 
     const selectBtn = () => {
         setAppointment({...appointment, service: appointmentDetails})
-        console.log(appointment)
     }
 
     return (
         <ServiceCardStyling>
             <div className="info">
                 <h2>{title}</h2>
-                <p>{price} - {length}</p>
+                <p>{price} - {duration}</p>
             </div>
             <div className="book">
                 <button onClick={selectBtn}>select</button>

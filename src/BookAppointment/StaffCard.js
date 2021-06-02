@@ -46,11 +46,10 @@ const StaffCardStyling = styled.div`
 `
 
 const StaffCard = ({appointment, setAppointment, staffDetails}) => {
-    const {name} = staffDetails
+    const {first_name, last_name} = staffDetails
 
     const selectBtn = () => {
         setAppointment({...appointment, staff: staffDetails})
-        console.log(appointment)
     }
 
     return (
@@ -60,7 +59,7 @@ const StaffCard = ({appointment, setAppointment, staffDetails}) => {
                 <h1>😵</h1>
             </div>
             <div className="info">
-                <h2>{name}</h2>
+                <h2>{first_name} {last_name}</h2>
             </div>
             <div className="book">
                 <button onClick={selectBtn}>select</button>
