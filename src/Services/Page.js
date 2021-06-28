@@ -1,4 +1,6 @@
 import styled from 'styled-components'
+import {useState, useEffect} from 'react'
+import {getServices} from '../api'
 
 const ServiceCardsContainer = styled.div`
     display: flex;
@@ -65,6 +67,7 @@ const ServiceCard = ({price, title, length}) =>
 const ServicesContainer = styled.div`
     /* background: #0091AD; */
     background: url("https://www.parlourvt.com/uploads/b/71386660-3fa2-11ea-8b02-5116966810d1/_T7A6742.jpg") no-repeat center center fixed; 
+    height: 100vh;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -78,17 +81,25 @@ const ServicesContainer = styled.div`
     }
 `
 
-const Services = () => 
-    <ServicesContainer>
-        <h1>Services</h1>
-        <ServiceCardsContainer>
-            <ServiceCard title="super cut" price="30.00" length="1 hour"/>
-            <ServiceCard title="super cut" price="30.00" length="1 hour"/>
-            <ServiceCard title="super cut" price="30.00" length="1 hour"/>
-            <ServiceCard title="super cut" price="30.00" length="1 hour"/>
-            <ServiceCard title="super cut" price="30.00" length="1 hour"/>
-            <ServiceCard title="super cut" price="30.00" length="1 hour"/>
-        </ServiceCardsContainer>
-    </ServicesContainer>
+const Services = () => {
+    const [services, setServices] = useState([])
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const allServices = await getServices()
+            setServices(allServices)
+        }
+        fetchData()
+    }, [])
+
+    return (
+        <ServicesContainer>
+            <h1>Services</h1>
+            <ServiceCardsContainer>
+                {services.map((details, i) => <ServiceCard title={details.title} price={details.price} length={details.duration}/>)}
+            </ServiceCardsContainer>
+        </ServicesContainer>
+    )
+}
 
 export default Services
