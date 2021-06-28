@@ -2,8 +2,7 @@ import styled from 'styled-components'
 import ServiceCard from './ServiceCard'
 import StaffCard from './StaffCard'
 import {useState, useEffect} from 'react'
-// import {aptDetails, staffDetails} from './api'
-import {getServices, getStaff} from './api'
+import {getServices, getStaff} from '../api'
 
 const BookAppointmentBackground = styled.div`
     position: fixed;
@@ -190,7 +189,7 @@ const BookAppointment = ({aptOverlay, setAptOverlay}) => {
                 <HeaderContainer>
                     <i className="fas fa-times" onClick={() => {setAptOverlay(false)}}></i>
                     <div className="header">
-                        header - title top left
+                        The Curly Sniffle
                     </div>
                 </HeaderContainer>
                 <div className='row flex-row'>

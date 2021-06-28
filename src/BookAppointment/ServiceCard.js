@@ -53,7 +53,7 @@ const ServiceCard = ({appointment, setAppointment, appointmentDetails}) => {
         <ServiceCardStyling>
             <div className="info">
                 <h2>{title}</h2>
-                <p>{price} - {duration}</p>
+                <p>${price} - {duration}</p>
             </div>
             <div className="book">
                 <button onClick={selectBtn}>select</button>
