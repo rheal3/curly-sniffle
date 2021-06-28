@@ -62,7 +62,7 @@ export const getServices = async () => {
             }
         }).then(res => res.data)
     } catch (err) {
-        return err
+        return []
     }
 }
 
@@ -74,6 +74,6 @@ export const getStaff = async () => {
             }
         }).then(res => res.data)
     } catch (err) {
-        return err
+        return []
     }
 }
