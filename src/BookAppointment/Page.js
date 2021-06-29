@@ -171,7 +171,7 @@ const BookAppointment = ({aptOverlay, setAptOverlay}) => {
     const contentSwitch = (currentPage) => {
         switch (currentPage) {
             case "service":
-                return services.map((details, i) => <ServiceCard appointment={appointment} setAppointment={setAppointment} appointmentDetails={details}/>)
+                return services.length === 0 ? <div><p>online booking is currently unavailable.</p> <p>please contact xxx-xxx-xxxx to book an appointment</p></div> : services.map((details, i) => <ServiceCard appointment={appointment} setAppointment={setAppointment} appointmentDetails={details}/>)
             case "staff":
                 return staff.map((details, i) => <StaffCard appointment={appointment} setAppointment={setAppointment} staffDetails={details}/>)
             case "dateTime":

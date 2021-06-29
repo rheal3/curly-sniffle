@@ -94,7 +94,6 @@ const Services = () => {
         fetchData()
     }, [])
 
-    console.log(services)
     return (
         <ServicesContainer>
             <h1>Services</h1>
