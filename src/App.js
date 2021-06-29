@@ -57,6 +57,8 @@ const NavOverlayContainer = styled.div`
     align-self: flex-end;
     padding-top: 10px;
     display: flex;
+    width: 100vw;
+    justify-content: flex-end;
     .menu-icon {
         font-size: 35px;
         padding-right: 30px;
@@ -78,7 +80,19 @@ const NavOverlayContainer = styled.div`
         background: #000;
         color: #FFF;
     }
-
+    .home-logo {
+        font-family: 'Great Vibes', cursive;
+        text-decoration: none;
+        color: #000;
+        padding: 5px;
+        font-weight: bold; 
+        display: ${props => props.overlay === false ? "flex" : "none"}
+    }
+    .left {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+    }
 `
 
 const ContentContainer = styled.div``
@@ -106,6 +120,7 @@ function App() {
         <AppContainer className="App">
             <Router>
                 <NavOverlayContainer overlay={overlay}>
+                    <Link to="/" className="home-logo left">The Curly Sniffle</Link>
                     <button onClick={() => {setAptOverlay(true)}}>book appointment</button>
                     {!overlay ? 
                         <span className="menu-icon" onClick={() => {setOverlay(!overlay)}}>&#9776;</span> : 
