@@ -10,6 +10,13 @@ const FAQSContainer = styled.div`
     padding: 25px;
 `
 
+const FAQContainer = styled.div`
+    .header h1 {
+        margin-top: 56px;
+        margin-bottom: 0px;
+    }
+`
+
 const FAQ = () => {
     const [faqs, setFaqs] = useState(initState)
 
@@ -24,7 +31,7 @@ const FAQ = () => {
         }))
     }
     return (
-        <div>
+        <FAQContainer>
             <div className="header">
                 <h1>faq</h1>
             </div>
@@ -33,7 +40,7 @@ const FAQ = () => {
                     <FAQCard faq={faq} index={i} toggleFAQ={toggleFAQ}/>
                 ))} 
             </FAQSContainer>
-        </div>
+        </FAQContainer>
     )
 }
 

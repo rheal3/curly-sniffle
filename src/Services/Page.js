@@ -66,7 +66,7 @@ const ServiceCard = ({price, title, length}) =>
 
 const ServicesContainer = styled.div`
     /* background: #0091AD; */
-    background: url("https://www.parlourvt.com/uploads/b/71386660-3fa2-11ea-8b02-5116966810d1/_T7A6742.jpg") no-repeat center center fixed; 
+    /* background: url("https://www.parlourvt.com/uploads/b/71386660-3fa2-11ea-8b02-5116966810d1/_T7A6742.jpg") no-repeat center center fixed;  */
     height: 100vh;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -78,6 +78,8 @@ const ServicesContainer = styled.div`
         margin-top: 32px;
         text-align: center;
         position: absolute;
+        margin-top: 56px;
+        margin-bottom: 0px;
     }
 `
 
