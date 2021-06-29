@@ -94,11 +94,12 @@ const Services = () => {
         fetchData()
     }, [])
 
+    console.log(services)
     return (
         <ServicesContainer>
             <h1>Services</h1>
             <ServiceCardsContainer>
-                {services.map((details, i) => <ServiceCard title={details.title} price={details.price} length={details.duration}/>)}
+                {services.length === 0 ? <p>please call xxx-xxx-xxxx to discuss available services</p> : services.map((details, i) => <ServiceCard title={details.title} price={details.price} length={details.duration}/>)}
             </ServiceCardsContainer>
         </ServicesContainer>
     )
