@@ -4,6 +4,8 @@
 
 The Curly Sniffle is a hair salon website with a primary focus on booking an appointment. The app features a home page, faq page, services available page, and a booking system. The booking system allows the user to choose the type of appointment they would like, the hairdresser they would like (if multiple are available for that type of appointment), and the time of the appointment out of the times that the hairdresser is available.
 
+<!-- motivation behind creation -->
+
 <!-- ### Features -->
 
 <!-- ## Video Walkthrough & Explanation -->
