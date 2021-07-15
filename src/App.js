@@ -81,7 +81,6 @@ const NavOverlayContainer = styled.div`
         color: #FFF;
     }
     .home-logo {
-        font-family: 'Great Vibes', cursive;
         text-decoration: none;
         color: #000;
         padding: 5px;
