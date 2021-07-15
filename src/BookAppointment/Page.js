@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import ServiceCard from './ServiceCard'
 import StaffCard from './StaffCard'
+import DateCard from './DateCard'
 import {useState, useEffect} from 'react'
 import {getServices, getStaff} from '../api'
 
@@ -175,7 +176,7 @@ const BookAppointment = ({aptOverlay, setAptOverlay}) => {
             case "staff":
                 return staff.map((details, i) => <StaffCard appointment={appointment} setAppointment={setAppointment} staffDetails={details}/>)
             case "dateTime":
-                return <p>dateTime page</p>
+                return <DateCard />
             case "customerDetails":
                 return <p>customerDetails page</p>
             default:
